@@ -1,0 +1,446 @@
+Aqui estão as perguntas e opções de resposta extraídas do formulário:
+
+1. **Qual o seu curso?**  
+   - Análise e Desenvolvimento de Sistemas (ADS)  
+   - Gestão de Produção Industrial (GPI)  
+   - Gestão Empresarial (EAD)  
+   - Desenvolvimento de Software Multiplataforma (DSM)  
+   - Gestão de Recursos Humanos  
+
+2. **Qual o período que cursa?**  
+   - Matutino  
+   - Noturno  
+   - EAD  
+
+3. **Informe o número do seu RA:**  
+   (Texto de linha única)
+
+4. **Qual o estado você nasceu?**  
+	São Paulo (SP) 
+	Acre (AC) 
+	Alagoas (AL) 
+	Amapá (AP) 
+	Amazonas (AM) 
+	Bahia (BA) 
+	Ceará (CE) 
+	Distrito Federal (D) 
+	Espírito Santo (ES) 
+	Goiás (GO) 
+	Maranhão (MA) 
+	Mato Grosso (MT) 
+	Mato Grosso do Sul (MS) 
+	Minas Gerais (MG) 
+	Paraná (PR) 
+	Paraíba (PB) 
+	Pará (PA) 
+	Pernambuco (PE) 
+	Piauí (PI) 
+	Rio de Janeiro (RJ) 
+	Rio Grande do Norte (RN) 
+	Rio Grande do Sul (RS) 
+	Rondônia (RO) 
+	Roraima (RR) 
+	Santa Catarina (SC) 
+	Sergipe (SE) 
+	Tocantins (TO) 
+
+5. **Em qual cidade você reside?**  
+	Franca 
+	Batatais 
+	Buritizal 
+	Capetinga 
+	Cássia 
+	Claraval 
+	Cristais Paulista 
+	Delfinópolis 
+	Estreito 
+	Guaíra 
+	Guará 
+	Ibiraci 
+	Igarapava 
+	Ipuã 
+	Itirapuã 
+	Ituverava 
+	Jeriquara
+	Miguelópolis 
+	Morro Agudo 
+	Nuporanga 
+	Orlândia 
+	Passos 
+	Patrocínio Paulista 
+	Pedregulho 
+	Peixoto 
+	Pratápolis 
+	Restinga 
+	Ribeirão Corrente 
+	Ribeirão Preto 
+	Rifaina 
+	Sacramento 
+	Sales Oliveira 
+	São Joaquim da Barra 
+	São José da Bela Vista 
+	São Tomás de Aquino 
+	Outra 
+
+6. **Qual é o seu gênero?**  
+   - Feminino  
+   - Masculino  
+   - Outro  
+
+7. **Qual a sua data de nascimento?**  
+   (Data)
+
+8. **Qual é o seu estado civil?**  
+   - Solteiro(a)  
+   - Casado(a)/União Estável  
+   - Separado(a), desquitado(a), divorciado(a)  
+   - Viúvo(a)
+
+9. **Você possui alguma necessidade especial?**  
+   - Nenhuma  
+   - Visual  
+   - Física  
+   - Auditiva  
+   - Outra(s)  
+
+10. **Quantos filhos você tem?**  
+   - Nenhum  
+   - 1  
+   - 2  
+   - 3  
+   - 4 ou mais  
+
+11. **Com quem você mora atualmente?**  
+   - Com pais e(ou) parentes  
+   - Com esposa(o) e (ou) filhos  
+   - Com amigos (compartilhando despesas) ou de favor  
+   - Sozinho  
+
+12. **Quantas pessoas, incluindo você, moram no seu domicílio?**  
+   (Texto de linha única)
+
+13. **Qual é a situação do domicílio em que você reside?**  
+   - Próprio  
+   - Alugado  
+   - Cedido  
+   - Financiado  
+   - Arrendado  
+   - Mensalista  
+   - Outro  
+
+14. **Há quanto tempo você mora neste domicílio?**  
+   - 0 a 12 meses  
+   - 13 à 24 meses  
+   - 25 à 48 meses  
+   - 49 à 60 meses  
+   - 61 meses ou mais  
+
+15. **Qual é a faixa de renda mensal da sua família?**  
+   - De R$ 0,00 até R$ 1.518,00  
+   - De R$ 1.518,01 até R$ 3.036,00  
+   - De R$ 3.036,01 até R$ 4.554,00  
+   - De R$ 4.554,01 até R$ 6.072,00  
+   - De R$ 6.072,01 até R$ 7.590,00  
+   - R$ 7.590,01 ou mais  
+   - Prefiro não informar  
+
+16. **Quantos de cada um dos itens abaixo há em seu domicílio?**  
+   Televisor
+   Vídeo cassete e(ou) DVD
+   Rádio
+   Automóvel
+   Motocicleta
+   Máquina de lavar roupa e(ou) tanquinho
+   Geladeira
+   Celular e(ou) Smartphone
+   Microcomputador de mesa/Desktop
+   Notebook
+   
+   - Nenhum  
+   - 1  
+   - 2  
+   - 3  
+   - 4 ou mais  
+
+17. **No seu domicílio você tem:**  
+   Telefone fixo
+   Internet
+   TV por assinatura e(ou) Serviços de Streaming
+   Empregada mensalista
+   
+   - Sim
+   - Não
+
+18. **Você trabalha?**  
+   - Sim  
+   - Não  
+
+19. **Qual é seu vínculo com o emprego?**  
+   - Não trabalho  
+   - Sou registrado(a) em indústria (calçados/confecções/outras)  
+   - Sou registrado(a) no comércio  
+   - Sou registrado(a) em empresa prestadora de serviços  
+   - Sou registrado(a) em empresa pública (federal/estadual/municipal)  
+   - Sou autônomo(a)  
+   - Sou empresário(a)  
+   - Sou estagiário(a)
+
+20. **Qual a área do seu trabalho?**  
+   - Não trabalho  
+   - Trabalho na área do curso  
+   - Trabalho fora da área do curso  
+
+21. **Qual é o seu regime de trabalho?**  
+   - Não trabalho  
+   - Regime de meio período  
+   - Regime Integral  
+   - Regime de turnos  
+
+22. **Em qual empresa você está atualmente contratado?**  
+   (Texto de linha única)
+
+23. **Você tem plano de saúde privado?**  
+   - Não tenho, uso o SUS  
+   - Não tenho, mas utilizo serviços de saúde populares (Ex: Dr Consulta, Cartão de Todos...)  
+   - Tenho e é pago integralmente pela empresa  
+   - Tenho e é pago parcialmente pela empresa  
+   - Tenho e é um plano familiar  
+   - Tenho e é um plano individual  
+
+24. **Qual é o grau de escolaridade da sua mãe?**  
+   - Nenhuma escolaridade  
+   - Ensino Fundamental I (1 ao 5º ano)  
+   - Ensino Fundamental II (6º ao 9º ano)  
+   - Ensino Médio  
+   - Ensino Superior  
+   - Pós-Graduação  
+   - Prefiro não responder  
+
+25. **Qual é o grau de escolaridade do seu pai?**  
+   - Nenhuma escolaridade  
+   - Ensino fundamental I (1º ao 5º ano)  
+   - Ensino fundamental II (6º ao 9º ano)  
+   - Ensino Médio  
+   - Ensino Superior  
+   - Pós-Graduação  
+   - Prefiro não responder  
+
+26. **Na sua vida escolar, você estudou....**  
+   - Sempre na escola pública  
+   - A maior parte em escola pública  
+   - Sempre em escola particular paga pela família  
+   - Sempre em escola particular com bolsa  
+   - A maior parte em escola particular paga pela família  
+   - A maior parte em escola particular com bolsa  
+
+27. **Você utiliza microcomputadores/desktop?**  
+   Em casa
+   No trabalho
+   Na escola
+   Em outros lugares
+   
+   -Sim
+   -Não
+
+28. **Com qual finalidade você utiliza microcomputadores/desktop?**  
+   Para trabalhos profissionais
+   Para trabalhos escolares
+   Para entretenimento (música, redes sociais,...)
+   Para comunicação por e-mail
+   Para operações bancárias
+   Para compras eletrônicas
+    
+   -Sim
+   -Não
+
+29. **Você utiliza notebook?**  
+   Em casa
+   No trabalho
+   Na escola
+   Em outros lugares
+   
+   -Sim
+   -Não
+
+30. **Com qual finalidade você utiliza notebook?**  
+   Para trabalhos profissionais
+   Para trabalhos escolares
+   Para entretenimento (música, redes sociais,...)
+   Para comunicação por e-mail
+   Para operações bancárias
+   Para compras eletrônicas
+    
+   -Sim
+   -Não
+
+31. **Você utiliza smartphone?**  
+   Em casa
+   No trabalho
+   Na escola
+   Em outros lugares
+   
+   -Sim
+   -Não
+
+32. **Com qual finalidade você utiliza smartphone?**  
+   Para trabalhos profissionais
+   Para trabalhos escolares
+   Para entretenimento (música, redes sociais,...)
+   Para comunicação por e-mail
+   Para operações bancárias
+   Para compras eletrônicas
+    
+   -Sim
+   -Não
+
+33. **Como você classifica seu conhecimento em informática?**  
+   - Nenhum  
+   - Pouco  
+   - Intermediário  
+   - Avançado  
+
+34. **Qual o seu conhecimento em relação aos aplicativos à seguir:**  
+   Windowns
+   Linux
+   Editores de textos (word, writer, ...)
+   Planilhas Eletrônicas (Excel, Cal, ...)
+   Apresentadores (PowerPoint, Impress, ...)
+   Sistemas de Gestão Empresarial
+   Inglês
+
+   -Nenhum
+   -Pouco
+   -Intermediário
+   -Avançado
+
+35. **Considerando seus conhecimentos sobre idiomas:**  
+   Inglês
+   Espanhol
+   Outros Idiomas
+   
+   Leio, escrevo e falo bem
+   Leio, escrevo e falo razoavelmente
+   Leio e escrevo mas não falo
+   Leio mas não escrevo e nem falo
+   Praticamente nulo
+
+36. **Com que frequência você busca informações nos seguintes meios de comunicação?**  
+    TV
+	Internet
+	Revistas
+	Jornais
+	Rádio
+	Redes Sociais
+	Conversas com Amigos
+	
+	-Nunca
+	-Pouco
+	-Às vezes
+	-Muito
+	-Sempre
+
+37. **Não considerando os livros acadêmicos, quantos livros você lê por ano (em média)?**  
+   - Nenhum  
+   - Até 2  
+   - De 3 até 6  
+   - De 7 até 10  
+   - Mais de 10  
+
+38. **Se você lê livros literários, qual(is) o(s) gênero(s) preferido(s)?**  
+   - Não leio  
+   - Romance  
+   - Ficção  
+   - Policial  
+   - Biográfico  
+   - Aventura  
+   - Autoajuda  
+   - Outros  
+
+39. **Você dedica parte do seu tempo para atividades voluntárias?**  
+   - Sim  
+   - Não  
+
+40. **Qual religião você professa?**  
+   - Nenhuma  
+   - Adventista  
+   - Budismo  
+   - Candomblé  
+   - Católica  
+   - Espírita  
+   - Evangélica  
+   - Islamismo  
+   - Judaísmo  
+   - Umbanda  
+   - Outra  
+
+41. **Quais fontes de entretenimento cultural você usa?**  
+   - Cinema  
+   - Exposições de arte  
+   - Filmes na internet  
+   - Literatura  
+   - Museus  
+   - Música  
+   - Teatro  
+   - TV  
+   - Nenhuma  
+
+42. **Estamos quase no fim! Como você ficou sabendo da FATEC Franca?**  
+   - Cartaz de divulgação  
+   - Indicação de familiar/amigo  
+   - Pelas redes sociais (LinkedIn, Facebook, Instagram...)  
+   - Por algum dos jornais  
+   - Por alguma das rádios  
+   - Por outdoor  
+   - Propaganda na escola que estudava  
+
+43. **Por que você escolheu este curso?**  
+   - Este curso forma profissionais facilmente absorvidos pelo mercado  
+   - Este curso forma profissionais que são bem remunerados  
+   - Minha vocação é seguir esta carreira  
+   - Este curso é gratuito  
+   - Este curso é de média duração  
+   - É um curso bem conceituado na região  
+   - Porque já trabalho na área  
+   - Sugestão ou vontade familiar  
+   - Outros motivos  
+
+44. **Qual sua maior expectativa quanto ao curso?**  
+   - Obter novos conhecimentos  
+   - Obter competências para exercício de uma profissão  
+   - Conhecer novas pessoas  
+   - Melhorar-me como pessoa para bons relacionamentos futuros  
+   - Obter um diploma de nível superior  
+   - Não tenho expectativa alguma  
+   - Outra expectativa  
+
+45. **Qual sua expectativa após se formar?**  
+   - Conquistar vaga em empresa privada  
+   - Prestar concurso público  
+   - Melhorar cargo e salário na empresa que trabalho  
+   - Abrir meu próprio negócio  
+   - Ingressar na carreira acadêmica  
+   - Nenhuma expectativa  
+   - Outra expectativa  
+
+46. **Você já estudou nesta instituição?**  
+   - Sim  
+   - Não  
+
+47. **Você já fez algum curso técnico?**  
+   - Não fiz  
+   - Sim, em uma ETEC  
+   - Sim, no SENAC  
+   - Sim, no SENAI  
+   - Sim, em outra instituição  
+
+48. **Qual meio de transporte você utiliza para ir à faculdade?**  
+   - Caminhando  
+   - Carona  
+   - Bicicleta  
+   - Moto  
+   - Carro  
+   - Ônibus  
+   - Transporte Escolar  
+
+49. **Escreva algumas linhas sobre sua história e seus sonhos de vida**  
+   (Texto de linha única)

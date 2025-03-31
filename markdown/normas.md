@@ -1,0 +1,1 @@
+https://revistaedufatec.fatecfranca.edu.br/normas/
