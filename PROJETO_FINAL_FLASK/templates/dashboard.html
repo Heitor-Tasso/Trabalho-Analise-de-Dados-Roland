@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }} - Análise Socioeconômica FATEC{% endblock %}
+
+{% block extra_css %}
+<style>
+    .section-card {
+        transition: all 0.3s ease;
+    }
+    .section-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .nav-sections {
+        border-radius: 5px;
+    }
+    .chart-container {
+        min-height: 400px;
+        position: relative;
+    }
+    .loading-indicator {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .chart-card {
+        margin-bottom: 20px;
+    }
+    .highcharts-credits {
+        display: none !important;
+    }
+    /* Melhorias nos elementos do gráfico */
+    .highcharts-title {
+        font-weight: bold !important;
+    }
+    .highcharts-axis-title {
+        font-weight: bold !important;
+    }
+    .highcharts-legend-item text {
+        font-weight: normal !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Left Sidebar - Navigation -->
+    <div class="col-md-3 mb-4">
+        <div class="card sticky-top" style="top: 20px;">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-sitemap me-2"></i> Navegação</h5>
+            </div>
+            <div class="list-group list-group-flush nav-sections">
+                {% for section_key, section_name in sections.items() %}
+                <a href="{{ url_for('dashboard', section=section_key) }}" 
+                   class="list-group-item list-group-item-action {% if section == section_key %}active{% endif %}">
+                    <i class="fas fa-chart-line me-2"></i> {{ section_name }}
+                </a>
+                {% endfor %}
+            </div>
+            <div class="card-footer bg-light">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-primary btn-sm d-block">
+                    <i class="fas fa-upload me-2"></i> Novo Upload
+                </a>
+                <form action="{{ url_for('clear_data') }}" method="post" class="mt-2">
+                    <button type="submit" class="btn btn-outline-danger btn-sm d-block w-100">
+                        <i class="fas fa-trash me-1"></i> Limpar Dados
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="col-md-9">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0"><i class="fas fa-chart-pie me-2"></i> {{ section_title }}</h2>
+                <span class="badge bg-light text-primary">{{ stats.total_records }} Registros</span>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="alert alert-info" id="section-info">
+                            <i class="fas fa-info-circle me-2"></i> 
+                            <span class="section-description">Carregando informações...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="charts-container">
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Carregando...</span>
+                        </div>
+                        <p class="mt-2">Carregando gráficos...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/chart-standardizer.js') }}"></script>
+<script>
+    // Section information
+    const sectionInfo = {
+        'visao_geral': 'Visão geral dos estudantes, com informações sobre cursos, períodos, gênero, idade e distribuição geográfica.',
+        'perfil_estudantes': 'Perfil detalhado dos estudantes, incluindo estado civil, filhos, moradia e necessidades especiais.',
+        'socioeconomico': 'Informações socioeconômicas como renda familiar, tempo de residência e itens no domicílio.',
+        'trabalho_formacao': 'Dados sobre trabalho e formação, incluindo vínculos empregatícios, regimes de trabalho e formação escolar.',
+        'tecnologia': 'Uso de tecnologia, conhecimentos em informática e aplicativos.',
+        'interesses_habitos': 'Interesses e hábitos dos estudantes, como leitura, atividades voluntárias e preferências culturais.',
+        'motivacoes_expectativas': 'Motivações para escolha do curso e expectativas futuras após a formação.',
+        'analise_texto': 'Análise das respostas abertas sobre histórias e sonhos de vida dos estudantes.'
+    };
+
+    // Global Highcharts settings - Configurações básicas para todos os gráficos
+    Highcharts.setOptions({
+        lang: {
+            thousandsSep: '.',
+            decimalPoint: ',',
+            months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            shortMonths: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            exportButtonTitle: "Exportar",
+            printButtonTitle: "Imprimir",
+            downloadPNG: 'Baixar imagem PNG',
+            downloadJPEG: 'Baixar imagem JPEG',
+            downloadPDF: 'Baixar documento PDF',
+            downloadSVG: 'Baixar imagem SVG',
+            downloadCSV: 'Baixar CSV',
+            downloadXLS: 'Baixar XLS',
+            viewFullscreen: 'Ver em tela cheia'
+        },
+        colors: [
+            '#0d6efd', '#6c757d', '#198754', '#dc3545', '#ffc107', 
+            '#0dcaf0', '#6610f2', '#fd7e14', '#20c997', '#d63384'
+        ],
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            buttons: {
+                contextButton: {
+                    menuItems: [
+                        'viewFullscreen',
+                        'separator',
+                        'downloadPNG',
+                        'downloadJPEG',
+                        'downloadPDF',
+                        'downloadSVG',
+                        'separator',
+                        'downloadCSV',
+                        'downloadXLS'
+                    ]
+                }
+            }
+        },
+        // Configurações padrão para todos os gráficos
+        chart: {
+            style: {
+                fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+            },
+            spacing: [10, 10, 15, 10], // [top, right, bottom, left]
+            backgroundColor: '#ffffff',
+            borderRadius: 0
+        },
+        title: {
+            style: {
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: '#0d6efd'
+            },
+            align: 'center'
+        },
+        xAxis: {
+            title: {
+                style: {
+                    fontSize: '13px',
+                    fontWeight: 'bold',
+                    color: '#495057'
+                }
+            },
+            labels: {
+                style: {
+                    fontSize: '12px',
+                    color: '#6c757d'
+                }
+            },
+            lineColor: '#dee2e6',
+            tickColor: '#dee2e6'
+        },
+        yAxis: {
+            title: {
+                style: {
+                    fontSize: '13px',
+                    fontWeight: 'bold',
+                    color: '#495057'
+                }
+            },
+            labels: {
+                style: {
+                    fontSize: '12px',
+                    color: '#6c757d'
+                }
+            },
+            lineColor: '#dee2e6',
+            tickColor: '#dee2e6',
+            gridLineColor: '#f5f5f5'
+        },
+        legend: {
+            itemStyle: {
+                fontSize: '12px',
+                fontWeight: 'normal',
+                color: '#495057'
+            }
+        },
+        tooltip: {
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            borderWidth: 1,
+            borderRadius: 8,
+            shadow: true,
+            style: {
+                fontSize: '12px',
+                color: '#212529'
+            }
+        }
+    });
+
+    $(document).ready(function() {
+        // Update section description
+        const currentSection = '{{ section }}';
+        $('.section-description').text(sectionInfo[currentSection] || 'Informações sobre esta seção.');
+
+        // Fetch chart data
+        fetchCharts(currentSection);
+    });
+
+    function fetchCharts(section) {
+        $.ajax({
+            url: '/get_charts/' + section,
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                renderCharts(data, section);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching charts:", error);
+                $('#charts-container').html(`
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Erro ao carregar gráficos. Por favor, tente novamente.
+                    </div>
+                `);
+            }
+        });
+    }
+
+    function renderCharts(data, section) {
+        console.log("Renderizando gráficos para seção: " + section);
+        
+        if (!data || Object.keys(data).length === 0) {
+            $('#charts-container').html(`
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    Não há dados disponíveis para esta seção.
+                </div>
+            `);
+            return;
+        }
+
+        // Clear container
+        $('#charts-container').empty();
+
+        // Special case for text analysis section
+        if (section === 'analise_texto' && data.respostas) {
+            renderTextAnalysis(data);
+            return;
+        }
+
+        // Create row for charts
+        const $row = $('<div class="row"></div>');
+        $('#charts-container').append($row);
+
+        // Render each chart
+        let chartCount = 0;
+        for (const chartId in data) {
+            if (data[chartId]) {
+                chartCount++;
+                
+                // Determine column size based on chart type
+                const isLarge = ['mapa_estados', 'cidades', 'escolaridade_pais', 'itens_domicilio', 'transporte'].includes(chartId);
+                const colClass = isLarge ? 'col-md-12' : 'col-md-6';
+                
+                // Create chart container
+                const $col = $(`<div class="${colClass} mb-4"></div>`);
+                const $chartCard = $(`
+                    <div class="card chart-card h-100">
+                        <div class="card-body">
+                            <div id="chart-${chartId}" class="chart-container"></div>
+                        </div>
+                    </div>
+                `);
+                
+                $col.append($chartCard);
+                $row.append($col);
+                
+                // Create a copy of the chart config to avoid modificações indesejadas
+                const chartConfig = JSON.parse(JSON.stringify(data[chartId]));
+                
+                // Configurações específicas por tipo de gráfico (antes da renderização)
+                applyChartSpecificSettings(chartConfig, chartId);
+                
+                // Handle special map chart case for Brazil states
+                if (chartId === 'mapa_estados') {
+                    // If using Highcharts Maps
+                    Highcharts.mapChart(`chart-${chartId}`, chartConfig);
+                } else {
+                    // Standard Highcharts
+                    Highcharts.chart(`chart-${chartId}`, chartConfig);
+                }
+            }
+        }
+
+        if (chartCount === 0) {
+            $('#charts-container').html(`
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    Não há gráficos disponíveis para esta seção.
+                </div>
+            `);
+        } else {
+            // Após renderizar todos os gráficos, disparar evento para padronização
+            setTimeout(() => {
+                const event = new Event('charts-loaded');
+                document.dispatchEvent(event);
+                console.log("Evento charts-loaded disparado");
+            }, 200);
+        }
+    }
+
+    // Aplica configurações específicas por tipo de gráfico antes da renderização
+    function applyChartSpecificSettings(config, chartId) {
+        // Verificar tipo de gráfico
+        const chartType = config.chart.type;
+        
+        // Configurações com base no tipo de gráfico
+        if (chartType === 'bar') {
+            // Gráfico de barras horizontal - ajustar eixos X e Y
+            if (!config.xAxis.title || !config.xAxis.title.text) {
+                config.xAxis.title = { text: 'Contagem' };
+            }
+            
+            // Limpar título do eixo Y para gráficos de barra horizontal (as categorias são o título)
+            if (config.yAxis.categories) {
+                config.yAxis.title = { text: null };
+            }
+        } else if (chartType === 'column') {
+            // Gráfico de barras vertical - ajustar eixos X e Y
+            if (!config.yAxis.title || !config.yAxis.title.text) {
+                config.yAxis.title = { text: 'Contagem' };
+            }
+            
+            // Ajustar rotação de labels do eixo X se houver muitas categorias
+            if (config.xAxis.categories && config.xAxis.categories.length > 5) {
+                config.xAxis.labels = config.xAxis.labels || {};
+                config.xAxis.labels.rotation = -45;
+                config.xAxis.labels.align = 'right';
+            }
+            
+            // Limpar título do eixo X para gráficos de coluna (as categorias são o título)
+            if (config.xAxis.categories) {
+                config.xAxis.title = { text: null };
+            }
+        } else if (chartType === 'pie') {
+            // Configurações específicas para gráficos de pizza
+            config.plotOptions = config.plotOptions || {};
+            config.plotOptions.pie = config.plotOptions.pie || {};
+            config.plotOptions.pie.dataLabels = {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f}%',
+                style: {
+                    textOutline: 'none'
+                }
+            };
+        }
+        
+        // Configurações específicas por ID de gráfico
+        switch (chartId) {
+            case 'cidades':
+                // Top 15 cidades
+                config.chart.height = 500;
+                break;
+                
+            case 'mapa_estados':
+                // Mapa de estados
+                config.chart.height = 600;
+                break;
+                
+            case 'itens_domicilio':
+                // Gráfico de itens de domicílio (stacked)
+                config.chart.height = 600;
+                config.legend = config.legend || {};
+                config.legend.align = 'right';
+                config.legend.verticalAlign = 'top';
+                config.legend.layout = 'vertical';
+                break;
+                
+            case 'escolaridade_pais':
+                // Comparação de escolaridade
+                config.chart.height = 550;
+                break;
+        }
+        
+        return config;
+    }
+
+    function renderTextAnalysis(data) {
+        if (!data.respostas || data.respostas.length === 0) {
+            $('#charts-container').html(`
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    Não há respostas de texto para exibir.
+                </div>
+            `);
+            return;
+        }
+
+        const $container = $('<div class="text-analysis"></div>');
+        
+        // Render word frequency chart if available
+        if (data.freq_palavras) {
+            const $chartRow = $(`
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="chart-freq_palavras" class="chart-container" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+            
+            $container.append($chartRow);
+            
+            // Add the chart after DOM append
+            setTimeout(() => {
+                Highcharts.chart('chart-freq_palavras', data.freq_palavras);
+                
+                // Disparar evento para padronização
+                const event = new Event('charts-loaded');
+                document.dispatchEvent(event);
+            }, 100);
+        }
+        
+        $container.append(`
+            <h3 class="h5 mb-3">Exemplos de Respostas</h3>
+            <p class="text-muted mb-4">Abaixo estão algumas respostas aleatórias para a pergunta "Escreva algumas linhas sobre sua história e seus sonhos de vida":</p>
+        `);
+
+        // Create accordion for responses
+        const $accordion = $('<div class="accordion" id="responseAccordion"></div>');
+        
+        data.respostas.forEach((resposta, index) => {
+            const $item = $(`
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading${index}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                                data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}">
+                            Resposta ${index + 1}
+                        </button>
+                    </h2>
+                    <div id="collapse${index}" class="accordion-collapse collapse" 
+                         aria-labelledby="heading${index}" data-bs-parent="#responseAccordion">
+                        <div class="accordion-body">
+                            ${resposta}
+                        </div>
+                    </div>
+                </div>
+            `);
+            
+            $accordion.append($item);
+        });
+
+        $container.append($accordion);
+        $('#charts-container').html($container);
+    }
+
+    // Adicionar esta função ao final do arquivo dashboard.html, antes do fechamento da tag script
+
+// Função especial para inicializar gráficos de barras horizontais
+function initHorizontalBarCharts() {
+    console.log("Inicializando gráficos de barras horizontais...");
+    
+    // Executar após um pequeno delay para garantir que os gráficos já estejam renderizados
+    setTimeout(() => {
+        Highcharts.charts.forEach(chart => {
+            if (!chart) return;
+            
+            const chartId = chart.renderTo.id;
+            const chartType = chart.options.chart.type;
+            
+            // Verificar se é um gráfico de barra horizontal
+            if (chartType === 'bar') {
+                console.log(`Inicializando gráfico de barras horizontais: ${chartId}`);
+                
+                // Forçar configurações específicas para gráficos de barra horizontal
+                chart.update({
+                    chart: {
+                        marginLeft: 150  // Espaço amplo para os labels
+                    },
+                    yAxis: {
+                        type: 'category',  // Tipo categoria para o eixo Y
+                        reversed: false    // Não inverter o eixo
+                    },
+                    xAxis: {
+                        min: 0  // Começar do zero
+                    }
+                }, false);
+                
+                // Verificar se é o gráfico de distribuição por gênero
+                if (chartId === 'chart-genero') {
+                    console.log("Aplicando configurações especiais para o gráfico de gênero");
+                    
+                    // Tentar reconstruir os dados para garantir que as categorias estão corretas
+                    if (chart.series && chart.series[0]) {
+                        const series = chart.series[0];
+                        const data = series.options.data;
+                        
+                        // Se os dados parecem estar em formato incorreto
+                        if (Array.isArray(data) && typeof data[0] !== 'object' && chart.yAxis[0].categories) {
+                            const categories = chart.yAxis[0].categories;
+                            const values = data;
+                            
+                            // Criar novos dados em formato correto
+                            const newData = [];
+                            for (let i = 0; i < Math.min(categories.length, values.length); i++) {
+                                newData.push({
+                                    name: categories[i],
+                                    y: values[i]
+                                });
+                            }
+                            
+                            // Atualizar a série
+                            series.update({
+                                data: newData
+                            }, false);
+                        }
+                    }
+                }
+                
+                chart.redraw();
+            }
+        });
+    }, 500);
+}
+
+// Adicionar ao evento de carregamento de gráficos
+// document.addEventListener('charts-loaded', function() {
+//     // Chamar as funções de padronização existentes
+//     standardizeChartElements();
+//     adjustSpecificCharts();
+//     fixLabelOverlap();
+    
+//     // Chamar nossa função especial para barras horizontais
+//     initHorizontalBarCharts();
+// });
+</script>
+{% endblock %}

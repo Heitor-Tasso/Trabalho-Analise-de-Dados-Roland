@@ -1,0 +1,22 @@
+/**
+ * Print styles
+ */
+@media print {
+    /* Print styles will be migrated from style.css */
+    body {
+        background-color: white !important;
+    }
+    
+    header, footer, .sidebar, .card-header, form, .btn {
+        display: none !important;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: none !important;
+    }
+    
+    .chart-container {
+        break-inside: avoid !important;
+    }
+}

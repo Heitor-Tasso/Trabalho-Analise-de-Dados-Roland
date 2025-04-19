@@ -1,7 +1,9 @@
 import pandas as pd
-import json
 import os
+import json
+import streamlit as st
 
+@st.cache_data
 def load_data():
     # Carregar nomes das colunas do CSV
     cols = pd.read_csv('./database/colunas.csv').columns.tolist()
@@ -28,4 +30,9 @@ def load_data():
     for col in date_cols:
         df[col] = pd.to_datetime(df[col], errors='coerce')
     
-    return df
+    return df.set_index("ID")
+
+if __name__ == "__main__":
+    df = load_data()
+    print(df.describe())
+    

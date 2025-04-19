@@ -1,0 +1,301 @@
+/* 
+ * charts.css
+ * Estilos específicos para os gráficos Highcharts
+ */
+
+/* Ajustes para prevenir sobreposição da legenda */
+.chart-container {
+    min-height: 400px;
+    position: relative;
+    overflow: visible !important;
+    /* Espaçamento à esquerda para acomodar a legenda */
+    /* margin-left: 160px !important; */
+}
+
+/* Container do gráfico dentro do cartão */
+.chart-card {
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Garantir visibilidade da legenda */
+.highcharts-legend {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    z-index: 100 !important;
+    /* Posicionar à esquerda do gráfico */
+    transform: translate(-160px, 0) !important;
+}
+
+/* Estilos para o fundo da legenda */
+.highcharts-legend-box {
+    visibility: visible !important;
+    opacity: 1 !important;
+    fill: rgba(255, 255, 255, 0.95) !important;
+    stroke: #cccccc !important;
+    stroke-width: 1px !important;
+    rx: 5px !important;
+    ry: 5px !important;
+}
+
+/* Estilos para o texto da legenda */
+.highcharts-legend-item text {
+    visibility: visible !important;
+    opacity: 1 !important;
+    fill: #333333 !important;
+    text-overflow: ellipsis !important;
+    max-width: 130px !important;
+}
+
+/* Destacar item quando o mouse passar por cima */
+.highcharts-legend-item:hover text {
+    fill: #0d6efd !important;
+    font-weight: bold !important;
+}
+
+/* Estilo para itens desabilitados (quando clicados) */
+.highcharts-legend-item-hidden text {
+    fill: #cccccc !important;
+    text-decoration: line-through !important;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 767px) {
+    .chart-container {
+        margin-left: 0 !important;
+        padding-top: 120px !important;
+    }
+    
+    .highcharts-legend {
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        width: 100% !important;
+    }
+}
+ 
+/* Remover estilos duplicados e conflitantes */
+
+/* Adicionar estes estilos otimizados */
+.chart-container {
+    min-height: 400px;
+    position: relative;
+    /* Espaço suficiente à esquerda para acomodar legendas */
+    /* margin-left: 160px !important; */
+}
+
+.highcharts-legend {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    z-index: 10 !important;
+    transform: translate(-150px, 0) !important; /* Deslocar para a esquerda */
+}
+
+.highcharts-legend-box {
+    fill: rgba(255, 255, 255, 0.95) !important;
+    stroke: #cccccc !important;
+    stroke-width: 1px !important;
+    rx: 5px !important;
+    ry: 5px !important;
+}
+
+.highcharts-legend-item {
+    cursor: pointer !important; /* Indicar que é clicável */
+}
+
+.highcharts-legend-item text {
+    fill: #333333 !important;
+    font-size: 12px !important;
+    /* Garantir que textos longos não ultrapassem o espaço */
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    max-width: 140px !important;
+}
+
+/* Estilo para itens desabilitados (quando clicados) */
+.highcharts-legend-item-hidden text {
+    fill: #cccccc !important;
+    text-decoration: line-through !important;
+}
+
+/* Corrigir posicionamento para diferentes dispositivos */
+@media (max-width: 767px) {
+    .chart-container {
+        margin-left: 0 !important;
+        margin-top: 120px !important;
+    }
+    
+    .highcharts-legend {
+        transform: translate(0, -100px) !important;
+        width: 100% !important;
+    }
+}
+
+/* Melhoria visual para cartões de gráficos */
+.chart-card {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+.chart-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.chart-card .card-body {
+    padding: 1rem;
+}
+
+/* Estilos para elementos específicos do Highcharts */
+.highcharts-title {
+    font-weight: bold !important;
+    fill: #0d6efd !important;
+    font-size: 16px !important;
+}
+
+.highcharts-subtitle {
+    font-size: 13px !important;
+    fill: #6c757d !important;
+}
+
+.highcharts-axis-title {
+    font-weight: bold !important;
+    fill: #495057 !important;
+    font-size: 13px !important;
+}
+
+.highcharts-axis-labels {
+    fill: #6c757d !important;
+    font-size: 12px !important;
+}
+
+.highcharts-legend-item text {
+    font-weight: normal !important;
+    fill: #495057 !important;
+    font-size: 12px !important;
+}
+
+.highcharts-legend-item:hover text {
+    fill: #0d6efd !important;
+}
+
+.highcharts-grid-line {
+    stroke: #f5f5f5 !important;
+    stroke-width: 1px !important;
+}
+
+.highcharts-axis-line, .highcharts-tick {
+    stroke: #dee2e6 !important;
+    stroke-width: 1px !important;
+}
+
+/* Estilos para tooltips */
+.highcharts-tooltip {
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.1)) !important;
+}
+
+.highcharts-tooltip-box {
+    fill: rgba(255, 255, 255, 0.95) !important;
+    stroke: #e9ecef !important;
+    stroke-width: 1px !important;
+    border-radius: 8px !important;
+}
+
+/* Melhorias para botões de exportação */
+.highcharts-button {
+    fill: #f8f9fa !important;
+    stroke: #dee2e6 !important;
+}
+
+.highcharts-button-box {
+    fill: #f8f9fa !important;
+    stroke: #dee2e6 !important;
+}
+
+.highcharts-button-symbol {
+    stroke: #6c757d !important;
+}
+
+.highcharts-button:hover .highcharts-button-box {
+    fill: #e9ecef !important;
+}
+
+/* Melhorias para gráficos específicos */
+.chart-large .highcharts-plot-background {
+    fill: #fbfbfb !important;
+}
+
+/* Ajustes para gráficos de pizza */
+.highcharts-pie-series .highcharts-point {
+    stroke: white !important;
+    stroke-width: 1px !important;
+}
+
+.highcharts-data-label text {
+    font-weight: normal !important;
+    text-shadow: none !important;
+}
+
+/* Ajustes para gráficos de barras/colunas */
+.highcharts-column-series .highcharts-point, 
+.highcharts-bar-series .highcharts-point {
+    stroke: white !important;
+    stroke-width: 1px !important;
+}
+
+/* Ajustes para visualização em dispositivos móveis */
+@media (max-width: 768px) {
+    .chart-container {
+        min-height: 350px;
+    }
+    
+    .highcharts-title {
+        font-size: 14px !important;
+    }
+    
+    .highcharts-axis-title {
+        font-size: 12px !important;
+    }
+    
+    .highcharts-axis-labels {
+        font-size: 10px !important;
+    }
+    
+    .highcharts-legend-item text {
+        font-size: 10px !important;
+    }
+}
+
+/* Ajustes de acessibilidade - modo daltônico */
+body.colorblind-mode .highcharts-color-0 { fill: #0072B2 !important; stroke: #0072B2 !important; }
+body.colorblind-mode .highcharts-color-1 { fill: #E69F00 !important; stroke: #E69F00 !important; }
+body.colorblind-mode .highcharts-color-2 { fill: #56B4E9 !important; stroke: #56B4E9 !important; }
+body.colorblind-mode .highcharts-color-3 { fill: #009E73 !important; stroke: #009E73 !important; }
+body.colorblind-mode .highcharts-color-4 { fill: #F0E442 !important; stroke: #F0E442 !important; }
+body.colorblind-mode .highcharts-color-5 { fill: #D55E00 !important; stroke: #D55E00 !important; }
+body.colorblind-mode .highcharts-color-6 { fill: #CC79A7 !important; stroke: #CC79A7 !important; }
+body.colorblind-mode .highcharts-color-7 { fill: #999999 !important; stroke: #999999 !important; }
+
+/* Ajustes para impressão */
+@media print {
+    .chart-container {
+        page-break-inside: avoid;
+    }
+    
+    .highcharts-title {
+        font-size: 14px !important;
+    }
+    
+    .highcharts-axis-title {
+        font-size: 11px !important;
+    }
+    
+    .highcharts-legend-item text {
+        font-size: 10px !important;
+    }
+}
